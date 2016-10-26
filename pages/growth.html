@@ -9,7 +9,7 @@
 
 <body>
     <h3>Growth in Population from 2010-13 by Country</h3>
-    <a href="aggregateCHART.html">Next -></a>
+    <a href="growthProduct.html">Next -></a>
     <br>
     <script src="https://d3js.org/d3.v3.min.js" charset="utf-8">
     </script>
@@ -24,7 +24,7 @@
         height = 600 - margin.top - margin.bottom;
     var horizontal = d3.scale.ordinal().rangeRoundBands([0, width], 0.25),
         vertical = d3.scale.linear().rangeRound([height, 0]);
-    var color = d3.scale.category10();
+    var color = d3.scale.category20c();
     var xAxis = d3.svg.axis()
         .scale(horizontal)
         .orient("bottom");

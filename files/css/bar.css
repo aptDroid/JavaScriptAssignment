@@ -1,9 +1,10 @@
     .bar {
-        fill: steelblue;
+        fill: green;
     }
     
     .bar:hover {
-        fill: brown;
+        fill: #454545;
+        transition-duration: 0.6s;
     }
     
     .axis {

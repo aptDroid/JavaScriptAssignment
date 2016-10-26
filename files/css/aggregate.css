@@ -7,11 +7,11 @@ h1 {
 }
 
 .y.axisRight text {
-    fill: orange;
+    fill: steelblue;
 }
 
 .y.axisLeft text {
-    fill: steelblue;
+    fill: blue;
 }
 
 .axis path,
@@ -22,10 +22,10 @@ h1 {
 }
 
 .bar1 {
-    fill: steelblue;
+    fill: blue;
 }
 
 .bar2 {
-    fill: orange;
+    fill: steelblue;
 }
 
