@@ -6,7 +6,9 @@
 </head>
 
 <body>
+    <br><br>
     <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
     <script>
     // set the dimensions of the canvas
     var margin = {
@@ -36,6 +38,15 @@
         .ticks(10);
 
 
+    //tooltip
+    var tip = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+            return "<strong>Value:</strong> <span style='color:orange'>" + d["Purchasing Power in Billions ( Current International Dollar) - 2013"] + "</span>";
+        })
+
+
     // add the SVG element
     var svg = d3.select("body").append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -44,6 +55,8 @@
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
+
+    svg.call(tip);
 
     // load the data
     d3.json("./../files/graphData.json", function(error, data) {
@@ -103,11 +116,18 @@
             })
             .attr("height", function(d) {
                 return height - y(d["Purchasing Power in Billions ( Current International Dollar) - 2013"]);
-            });
+            })
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide)
 
     });
+
+    function type(d) {
+        d.frequency = +d.frequency;
+        return d;
+    }
     </script>
     <br>
     <h3>Purchase power by Country</h3>
-    <a href="growth.html">Next -></a>
+    <a href="growthPopulation.html">Next -></a>
 </body>

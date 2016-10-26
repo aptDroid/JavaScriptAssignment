@@ -1,8 +1,8 @@
 <!DOCTYPE html>
+<html>
 <meta charset="utf-8">
 
 <head>
-    <h1> Chart for Aggregate Population and GDP </h1>
     <link rel="stylesheet" href="./../files/css/aggregate.css">
 </head>
 
@@ -33,12 +33,15 @@
     var yAxisLeft = d3.svg.axis().scale(y0).ticks(6).orient("left");
     // create right yAxis
     var yAxisRight = d3.svg.axis().scale(y1).ticks(6).orient("right");
+
     var svg = d3.select("body").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("class", "graph")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
     d3.json("./../files/aggregate.json", function(error, data) {
         x.domain(data.map(function(d) {
             return d.continent;
@@ -112,3 +115,8 @@
         return d;
     }
     </script>
+    <br>
+    <h2> Chart for Aggregate Population and GDP </h2>
+</body>
+
+</html>
