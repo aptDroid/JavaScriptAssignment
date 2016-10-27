@@ -28,6 +28,7 @@ const rl = readline.createInterface({
     input: fs.createReadStream('datafile.csv')
 });
 
+//to find aggregate data
 function aggregate(arrContinents, arrContinentwisePopulation, arrContinentwiseGDP) {
     this.continent = arrContinents;
     this.population = arrContinentwisePopulation;
@@ -35,12 +36,14 @@ function aggregate(arrContinents, arrContinentwisePopulation, arrContinentwiseGD
 
 }
 
+//to find data for population chart
 function populationChart(country, population13) {
 
     this.country = country;
     this.population13 = population13;
 };
 
+//to find data for gdp
 function GDPChart(country, GDP) {
     this.country = country;
     this.GDP = GDP;
@@ -59,9 +62,10 @@ function GrowthChart(country, populationGrowth, purchasingPowerGrowth) {
     this.purchasingPowerGrowth = purchasingPowerGrowth;
 };
 
-rl.on('line', function(line) {
+rl.on('line', function(line) {  //read line by line
     var lineRecords = line.trim().split(',');;
 
+    //separating header
     if (i < 1) {
         indexCountry = lineRecords.indexOf('Country Name');
         indexPopulation10 = lineRecords.indexOf('Population (Millions) 2010');
@@ -80,7 +84,7 @@ rl.on('line', function(line) {
             GDP = lineRecords[indexGDP];
             purchasingPowerByCountry10 = lineRecords[indexPurchasingPowerByCountry10];
             purchasingPowerByCountry13 = lineRecords[indexPurchasingPowerByCountry13];
-            populationGrowth = (parseFloat(population13)*1000) - (parseFloat(population10)*1000);
+            populationGrowth = (parseFloat(population13) * 1000) - (parseFloat(population10) * 1000);
             purchasingPowerGrowth = parseFloat(purchasingPowerByCountry13) - parseFloat(purchasingPowerByCountry10);
             populationArray.push(new populationChart(country, population13));
             GDPArray.push(new GDPChart(country, GDP));
@@ -164,10 +168,7 @@ rl.on('line', function(line) {
 
             }
 
-            //  console.log(populationArray);
-            // console.log(GDPArray);
-            // console.log(purchasingPowerByCountryArray);
-            //console.log(GrowthArray);
+            
             if (country.length == 0) {
                 for (var it = 0; it < 6; it++) {
                     aggregateArray.push(new aggregate(arrContinents[it], arrContinentwisePopulation[it], arrContinentwiseGDP[it]));

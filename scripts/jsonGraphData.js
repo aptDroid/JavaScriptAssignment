@@ -59,27 +59,6 @@ lineReader.on('line', function(line) //reads line by line
 
             writeStream.write('}');
 
-            //writeStream.write(",\n{" + header[0] + ":" + value[0] + "," + header[5] + ":" + parseFloat(value[5].replace('"','')) + "}");
-
-            //writeStream.write(',\n{');
-
-            // for(var i = 0; i < header.length; i++)
-            // {
-            // 	if(i == 0)
-            // 			{
-            // 				writeStream.write(header[i] + ": " + value[i] + ',');	
-            // 			}
-            // 			else if(i != header.length - 1)
-            // 			{
-            // 				writeStream.write(header[i] + ": " + parseFloat(value[i].replace('"','')) + ',');	
-            // 			}
-            // 			else
-            // 			{
-            // 				writeStream.write(header[i] + ": " + parseFloat(value[i].replace('"','')));	
-            // 			}
-            // }	
-            // writeStream.write('}');
-
         }
 
 

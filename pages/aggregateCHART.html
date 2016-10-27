@@ -10,6 +10,7 @@
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
     <script>
+    // margin for canvas
     var margin = {
             top: 50,
             right: 30,
@@ -19,8 +20,11 @@
         width = 960 - margin.left - margin.right,
         height = 550 - margin.top - margin.bottom;
 
+    // x scale
     var x = d3.scale.ordinal()
         .rangeRoundBands([0, width], .1);
+    
+    // y scale
     var y0 = d3.scale.linear().domain([0, 50000]).range([height, 0]),
         y1 = d3.scale.linear().domain([0, 150000]).range([height, 0]);
 
@@ -41,7 +45,7 @@
         .attr("class", "graph")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-
+    // read file
     d3.json("./../files/aggregate.json", function(error, data) {
         x.domain(data.map(function(d) {
             return d.continent;
@@ -95,6 +99,8 @@
             .attr("height", function(d, i, j) {
                 return height - y0(d.population);
             });
+
+        // append bars
         bars.append("rect")
             .attr("class", "bar2")
             .attr("x", function(d) {

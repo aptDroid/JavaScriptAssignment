@@ -12,6 +12,7 @@
     <script src="https://d3js.org/d3.v3.min.js" charset="utf-8">
     </script>
     <script>
+    //canvas margins
     var margin = {
             top: 20,
             bottom: 165,
@@ -20,9 +21,15 @@
         },
         width = 1000 - margin.left - margin.right,
         height = 600 - margin.top - margin.bottom;
+
+    //scales
     var horizontal = d3.scale.ordinal().rangeRoundBands([0, width], 0.25),
         vertical = d3.scale.linear().rangeRound([height, 0]);
+    
+    //color variant
     var color = d3.scale.category20c();
+    
+    //axes
     var xAxis = d3.svg.axis()
         .scale(horizontal)
         .orient("bottom");
@@ -30,12 +37,16 @@
         .scale(vertical)
         .orient("left");
 
+    //add canvas
     var svg = d3.select("body").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
+    
+
+    //read file
     d3.json("./../files/growthData.json", function(err, data) {
         data.forEach(function(d) {
             d["Country Name"] = d["Country Name"];
@@ -45,6 +56,8 @@
             d["Population (Millions) - 2013"] = d["Population (Millions) - 2013"];
 
         });
+
+        // set axes data
         var xData = ["Population (Millions) - 2010", "Population (Millions) - 2011", "Population (Millions) - 2012", "Population (Millions) - 2013"];
         var dataIntermediate = xData.map(function(c) {
             return data.map(function(d) {
