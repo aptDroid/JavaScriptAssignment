@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <link rel="stylesheet" href="./../files/css/aggregate.css">
+</head>
+
+<body>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+    <script>
+    var margin = {
+            top: 50,
+            right: 30,
+            bottom: 50,
+            left: 100
+        },
+        width = 960 - margin.left - margin.right,
+        height = 550 - margin.top - margin.bottom;
+
+    var x = d3.scale.ordinal()
+        .rangeRoundBands([0, width], .1);
+    var y0 = d3.scale.linear().domain([0, 50000]).range([height, 0]),
+        y1 = d3.scale.linear().domain([0, 150000]).range([height, 0]);
+
+
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
+    // create left yAxis
+    var yAxisLeft = d3.svg.axis().scale(y0).ticks(6).orient("left");
+    // create right yAxis
+    var yAxisRight = d3.svg.axis().scale(y1).ticks(6).orient("right");
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("class", "graph")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+    d3.json("./../files/aggregate.json", function(error, data) {
+        x.domain(data.map(function(d) {
+            return d.continent;
+        }));
+        y0.domain([0, d3.max(data, function(d) {
+            return d.population;
+        })]);
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis)
+            .append("text")
+            .attr("x", 6)
+            .attr("dx", "-2em")
+            .style("text-anchor", "end")
+            .style("font-size", "15px")
+            .text("Countries");
+
+        svg.append("g")
+            .attr("class", "y axis axisLeft")
+            .attr("transform", "translate(0,0)")
+            .call(yAxisLeft)
+            .append("text")
+            .attr("y", 6)
+            .attr("dy", "-2em")
+            .style("text-anchor", "end")
+            .style("font-size", "15px")
+            .text("population");
+
+        svg.append("g")
+            .attr("class", "y axis axisRight")
+            .attr("transform", "translate(" + (width) + ",0)")
+            .call(yAxisRight)
+            .append("text")
+            .attr("y", 6)
+            .attr("dy", "-2em")
+            .attr("dx", "2em")
+            .style("text-anchor", "end")
+            .text("GDP");
+        bars = svg.selectAll(".bar").data(data).enter();
+        bars.append("rect")
+            .attr("class", "bar1")
+            .attr("x", function(d) {
+                return x(d.continent);
+            })
+            .attr("width", x.rangeBand() / 2)
+            .attr("y", function(d) {
+                return y0(d.population);
+            })
+            .attr("height", function(d, i, j) {
+                return height - y0(d.population);
+            });
+        bars.append("rect")
+            .attr("class", "bar2")
+            .attr("x", function(d) {
+                return x(d.continent) + x.rangeBand() / 2;
+            })
+            .attr("width", x.rangeBand() / 2)
+            .attr("y", function(d) {
+                return y1(d.GDP);
+            })
+            .attr("height", function(d, i, j) {
+                return height - y1(d.GDP);
+            });
+    });
+
+    function foreach(d) {
+        d.population = +d.population;
+        d.GDP = +d.GDP;
+        return d;
+    }
+    </script>
+    <br>
+    <h2> Chart for Aggregate Population and GDP </h2>
+</body>
+
+</html>
